@@ -1,13 +1,13 @@
-# https://mesonbuild.com/
 project(
-    'my-fantastic-project', # Project name
-    ['c', 'cpp'], # Project type. We need a C++ compiler. The C compiler is required for MPI.
-    default_options : ['cpp_std=c++17'], # Yes, we need C++17, at least for constexpr
+    'my-fantastic-project',
+    ['c', 'cpp'],
+    default_options : ['cpp_std=c++17'],
     version : '0.1'
 )
 
-eigen = dependency('eigen3', version: '>=3.4.0')
-mpi = dependency('mpi', language: 'cpp')
+eigen_dep = dependency('eigen3', version: '>=3.4.0', fallback: ['eigen', 'eigen_dep'])
+mpi_dep = dependency('mpi', language: 'cpp')
+gtest_dep = dependency('gtest', main: true, fallback: ['gtest', 'gtest_main_dep'])
 
 subdir('src')
 subdir('milestones')

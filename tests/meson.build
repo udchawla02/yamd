@@ -1,16 +1,20 @@
-google_test = dependency('gtest')
-
 test_sources = [
-  'test_hello_world.cpp',
-  'gtest_mpi_main.cpp'
+	'gtest_mpi_main.cpp',
+	'test_hello_world.cpp',
+	#'test_milestone2_verlet.cpp',
+	'test_milestone3_verlet.cpp',
+	'test_lj_direct_summation.cpp'
 ]
 
-tests = executable(
+# Specify that we don't want the main function from gtest
+gtest_dep = dependency('gtest', main : false)
+
+tests_exe = executable(
 	'tests',
 	test_sources,
 	include_directories : [lib_incdirs],
 	link_with : [lib],
-	dependencies : [eigen, google_test, mpi]
+	dependencies : [gtest_dep, eigen_dep, mpi_dep]
 )
 
-test('Tests', tests)
+test('unit', tests_exe)
